@@ -50,7 +50,7 @@ export class AuthenticationService {
   }
 
   public getToken(): string {
-    return this.token || '{}';
+    return this.token;
   }
 
   public isLoggedIn(): boolean {

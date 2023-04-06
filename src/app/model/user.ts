@@ -1,5 +1,5 @@
 export class User{
-  public userId: string;
+  public userId: number;
   public firstName: string;
   public lastName: string;
   public username: string;
@@ -14,21 +14,21 @@ export class User{
   public role: string;
   public authorities: [];
 
-  constructor() {
-    this.userId = '';
-    this.firstName = '';
-    this.lastName = '';
-    this.username = '';
-    this.password = '';
-    this.email = '';
-    this.lastLoginDate = null;
-    this.lastLoginDateDisplay = null;
-    this.joinDate = null;
-    this.profileImageUrl = '';
-    this.active = false;
-    this.notLocked = false;
-    this.role = '';
-    this.authorities = [];
-  }
+  // constructor() {
+  //   this.userId = 0;
+  //   this.firstName = '';
+  //   this.lastName = '';
+  //   this.username = '';
+  //   this.password = '';
+  //   this.email = '';
+  //   this.lastLoginDate = null;
+  //   this.lastLoginDateDisplay = null;
+  //   this.joinDate = null;
+  //   this.profileImageUrl = '';
+  //   this.active = false;
+  //   this.notLocked = false;
+  //   this.role = '';
+  //   this.authorities = [];
+  // }
 
 }

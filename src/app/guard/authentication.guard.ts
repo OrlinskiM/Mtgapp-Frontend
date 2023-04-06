@@ -24,7 +24,7 @@ export class AuthenticationGuard implements CanActivate {
     }
 
     this.router.navigate(['/login']);
-    this.notificationService.notify(NotificationType.ERROR, `You need to login to access this page`);
+    this.notificationService.sendNotification(NotificationType.ERROR, `You need to login to access this page`);
     return false;
   }
 
