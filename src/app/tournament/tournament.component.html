@@ -78,20 +78,20 @@
             </h2>
             <div id="round{{matching?.round}}" [ngClass]="tournament.currentRound == matching.round ? 'accordion-collapse collapse show' : 'accordion-collapse collapse'" data-bs-parent="#accordionExample">
               <table class="table table-hover mb-0">
-                <tbody *ngFor="let game of matching.games">
+                <tbody *ngFor="let match of matching.matches">
                   <tr class="">
-                    <td (click)="onSelectGame(game)">
-                      <img height="40" width="40" src="{{game.player1.player.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/>
+                    <td (click)="onSelectMatch(match)">
+                      <img height="40" width="40" src="{{match.player1.player.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/>
                     </td>
-                    <td (click)="onSelectGame(game)">{{game.player1.player.username}}</td>
-                    <td (click)="onSelectGame(game)" class="text-center">
+                    <td (click)="onSelectMatch(match)">{{match.player1.player.username}}</td>
+                    <td (click)="onSelectMatch(match)" class="text-center">
                       <h3>
-                        <span [ngStyle]="{'color':game.gamesWonPlayer1 >= game.gamesWonPlayer2 && game.gameResult !== 'NO_RESULT' ? 'green' : 'black' }">{{game.gamesWonPlayer1}}</span>
+                        <span [ngStyle]="{'color':match.gamesWonPlayer1 >= match.gamesWonPlayer2 && match.matchResult !== 'NO_RESULT' ? 'green' : 'black' }">{{match.gamesWonPlayer1}}</span>
                         VS
-                        <span [ngStyle]="{'color':game.gamesWonPlayer2 >= game.gamesWonPlayer1 && game.gameResult !== 'NO_RESULT' ? 'green' : 'black' }">{{game.gamesWonPlayer2}}</span>
+                        <span [ngStyle]="{'color':match.gamesWonPlayer2 >= match.gamesWonPlayer1 && match.matchResult !== 'NO_RESULT' ? 'green' : 'black' }">{{match.gamesWonPlayer2}}</span>
                       </h3></td>
-                    <td (click)="onSelectGame(game)" class="text-end">{{game.player2.player.username}}</td>
-                    <td (click)="onSelectGame(game)" class="text-end"><img height="40" width="40" src="{{game.player2.player.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/></td>
+                    <td (click)="onSelectMatch(match)" class="text-end">{{match.player2.player.username}}</td>
+                    <td (click)="onSelectMatch(match)" class="text-end"><img height="40" width="40" src="{{match.player2.player.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/></td>
 
                   </tr>
                 </tbody>
@@ -120,25 +120,25 @@
   </div>
 </div>
 
-<button [hidden]="true" type="button" id="openGameResults" data-bs-toggle="modal" data-bs-target="#addGameResult">
+<button [hidden]="true" type="button" id="openMatchResults" data-bs-toggle="modal" data-bs-target="#addMatchResult">
 </button>
 
-<div class="modal draggable fade bd-example-modal-lg" id="addGameResult" tabindex="-1" role="dialog"
+<div class="modal draggable fade bd-example-modal-lg" id="addMatchResult" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-center">Game results</h5>
+            <h5 class="modal-title text-center">Match results</h5>
             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <div>
-              <form #gameForm="ngForm" (ngSubmit)="onGameResultSubmit(gameForm)">
+              <form #matchForm="ngForm" (ngSubmit)="onMatchResultSubmit(matchForm)">
                 <div class="form-group">
-                  <label for="gamesWonPlayer1">{{currentGame?.player1.player.username}}'s score:</label>
-                  <select name="gamesWonPlayer1" [(ngModel)]="currentGame.gamesWonPlayer1" required ngModel class="form-select" >
+                  <label for="gamesWonPlayer1">{{currentMatch?.player1.player.username}}'s score:</label>
+                  <select name="gamesWonPlayer1" [(ngModel)]="currentMatch.gamesWonPlayer1" required ngModel class="form-select" >
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -146,21 +146,21 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="gamesWonPlayer2">{{currentGame?.player2.player.username}}'s score:</label>
-                  <select name="gamesWonPlayer2" [(ngModel)]="currentGame.gamesWonPlayer2" required ngModel class="form-select">
+                  <label for="gamesWonPlayer2">{{currentMatch?.player2.player.username}}'s score:</label>
+                  <select name="gamesWonPlayer2" [(ngModel)]="currentMatch.gamesWonPlayer2" required ngModel class="form-select">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </select>
                 </div>
-                <button type="submit"  style="display: none;" id="game-save"></button>
+                <button type="submit"  style="display: none;" id="match-save"></button>
               </form>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="game-close">Close</button>
-            <button type="button" (click)="saveGame()" [disabled]="gameForm.invalid" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="match-close">Close</button>
+            <button type="button" (click)="saveMatch()" [disabled]="matchForm.invalid" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>

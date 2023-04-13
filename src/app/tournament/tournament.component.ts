@@ -8,7 +8,7 @@ import { NotificationType } from '../enum/notification-type.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PlayerParticipation } from '../model/player-participation';
 import { NgForm } from '@angular/forms';
-import { Game } from '../model/game';
+import { Match } from '../model/match';
 import { User } from '../model/user';
 
 @Component({
@@ -25,7 +25,7 @@ throw new Error('Method not implemented.');
   tournamentString: string;
   tournament: Tournament;
   currentUser: User;
-  currentGame: Game = new Game;
+  currentMatch: Match = new Match;
   isOwner: boolean;
 
   constructor(private route: ActivatedRoute,
@@ -88,17 +88,17 @@ throw new Error('Method not implemented.');
       );
     }
 
-    onGameResultSubmit(gameform: NgForm){
+    onMatchResultSubmit(matchform: NgForm){
       const formData = new FormData();
-      formData.append('gameId', this.currentGame.gameId.toString());
-      formData.append('gamesWonPlayer1', gameform.form.get('gamesWonPlayer1').value);
-      formData.append('gamesWonPlayer2', gameform.form.get('gamesWonPlayer2').value);
+      formData.append('matchId', this.currentMatch.matchId.toString());
+      formData.append('gamesWonPlayer1', matchform.form.get('gamesWonPlayer1').value);
+      formData.append('gamesWonPlayer2', matchform.form.get('gamesWonPlayer2').value);
       this.subscriptions.push(
-        this.tournamentService.addResultsToGame(this.tournamentString, formData).subscribe(
+        this.tournamentService.addResultsToMatch(this.tournamentString, formData).subscribe(
           (response: Tournament) => {
             this.getTournament(false);
-            gameform.reset();
-            document.getElementById('game-close').click();
+            matchform.reset();
+            document.getElementById('match-close').click();
             this.notifier.sendNotification(NotificationType.SUCCESS, `Results set`);
           },
           (errorResponse: HttpErrorResponse) => {
@@ -109,10 +109,10 @@ throw new Error('Method not implemented.');
       );
     }
 
-    onSelectGame(game: Game){
-      if(this.isOwner && this.tournament.currentRound == game.round){
-        this.currentGame = game;
-        document.getElementById('openGameResults').click();
+    onSelectMatch(match: Match){
+      if(this.isOwner && this.tournament.currentRound == match.round){
+        this.currentMatch = match;
+        document.getElementById('openMatchResults').click();
       }
     }
 
@@ -149,8 +149,8 @@ throw new Error('Method not implemented.');
       );
     }
 
-    saveGame(){
-      document.getElementById('game-save').click();
+    saveMatch(){
+      document.getElementById('match-save').click();
     }
 
     private getLoggedInUserFromLocalCache(): User{

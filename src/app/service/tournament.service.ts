@@ -30,8 +30,8 @@ export class TournamentService {
     return this.http.post<Tournament>(`${this.host}/tournament/${tournamentString}/guest`, formData);
   }
 
-  public addResultsToGame(tournamentString: string, formData: FormData): Observable<Tournament>{
-    return this.http.post<Tournament>(`${this.host}/tournament/${tournamentString}/gameResults`, formData);
+  public addResultsToMatch(tournamentString: string, formData: FormData): Observable<Tournament>{
+    return this.http.post<Tournament>(`${this.host}/tournament/${tournamentString}/matchResults`, formData);
   }
 
 

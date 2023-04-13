@@ -1,7 +1,7 @@
-import { Game } from "./game";
+import { Match } from "./match";
 
 export class RoundMatching{
 	roundMatchingId: number;
 	round: number;
-	games: Game[];
+	matches: Match[];
 }
