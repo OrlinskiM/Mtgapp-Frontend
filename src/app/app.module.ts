@@ -14,6 +14,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { FormsModule } from '@angular/forms';
+import { TournamentService } from './service/tournament.service';
+import { TournamentComponent } from './tournament/tournament.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,8 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     RegisterComponent,
     UserComponent,
+    TournamentComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +34,14 @@ import { FormsModule } from '@angular/forms';
     NotificationModule,
     FormsModule
   ],
-  providers: [NotificationService, AuthenticationGuard, AuthenticationService, UserService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [
+    NotificationService,
+    AuthenticationGuard,
+    AuthenticationService,
+    UserService,
+    TournamentService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

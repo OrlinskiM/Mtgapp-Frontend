@@ -1,0 +1,167 @@
+<div class=" shadow-sm position-relative overflow-hidden p-3 mt-3 bg-light">
+  <!-- <p>tournament works!</p>
+  <p>{{tournamentString}}</p> -->
+  <div class="row">
+    <div class="col-lg"><!-------------------------------left-->
+      <div class="shadow card mb-3"> <!-------------------------------info card-->
+        <div class="card-header">
+          <h5 class="card-title">{{tournament?.owner.username}}'s tournament</h5>
+        </div>
+        <div class="card-body">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngIf="tournament?.creationDate"><b>Created:  </b>{{tournament?.creationDate}}</li>
+          <li class="list-group-item" *ngIf="tournament?.finishDate"><b>Finished:  </b>{{tournament?.finishDate}}</li>
+          <li class="list-group-item"><b>Rounds:  </b>{{tournament?.rounds}}</li>
+          <li class="list-group-item"><b>Current round:  </b>{{tournament?.currentRound}}</li>
+
+        </ul>
+      </div>
+        <div class="card-footer">
+          <p class="card-text">Share this code with your players:</p>
+            <h2>{{tournament?.tournamentString}}</h2>
+        </div>
+      </div>
+      <div class="shadow card mb-3"> <!-------------------------------players card-->
+        <div class="card-header">
+          <h5 class="card-title">Players</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+              <tbody *ngFor="let participation of tournament?.participations">
+                <tr class="">
+                  <td (click)="onSelectParticipation(participation)">
+                    <img height="40" width="40" src="{{participation?.player.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/>
+                  </td>
+                  <td (click)="onSelectParticipation(participation)">{{participation?.player.username}}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="card-footer" [hidden]="!isOwner">
+          <form #GuestForm="ngForm" (ngSubmit)="onGuestSubmit(GuestForm)">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" name="username" required ngModel class="form-control">
+                <button class="btn btn-outline-secondary" [disabled]="GuestForm.invalid" type="submit">Add guest</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg"><!-------------------------------right-->
+      <div class="shadow card mb-3"> <!-------------------------------round card-->
+        <div class="card-header">
+          Rounds
+        </div>
+        <div class="card-body" [hidden]="!isOwner || tournament.currentRound > 0">
+          <p class="card-text">Start your tournament</p>
+          <form #startForm="ngForm" (ngSubmit)="onTournamentStart(startForm)">
+            <div class="form-group">
+              <div class="input-group">
+                <button class="btn btn-primary" [disabled]="startForm.invalid" type="submit">Start tournament</button>
+                <input type="number" name="rounds" placeholder="Enter number of rounds to play" required ngModel class="form-control">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-body" [hidden]="!isOwner || tournament.currentRound == 0">
+          <p class="card-text">Pair next round</p>
+          <button type="button" (click)="onNextRound()" class="btn btn-primary">Start</button>
+        </div>
+        <div class="accordion" id="accordionExample">     <!-------------------------------round accordion-->
+          <div class="accordion-item" *ngFor="let matching of tournament?.roundMatchings">
+            <h2 class="accordion-header">
+              <button [ngClass]="tournament.currentRound == matching.round ? 'accordion-button' : 'accordion-button collapsed' " type="button" data-bs-toggle="collapse" attr.data-bs-target="#round{{matching.round}}" attr.aria-expanded="{{matching.round == 1}}" attr.aria-controls="round{{matching.round}}">
+                Round {{matching.round}}
+              </button>
+            </h2>
+            <div id="round{{matching?.round}}" [ngClass]="tournament.currentRound == matching.round ? 'accordion-collapse collapse show' : 'accordion-collapse collapse'" data-bs-parent="#accordionExample">
+              <table class="table table-hover mb-0">
+                <tbody *ngFor="let game of matching.games">
+                  <tr class="">
+                    <td (click)="onSelectGame(game)">
+                      <img height="40" width="40" src="{{game.player1.player.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/>
+                    </td>
+                    <td (click)="onSelectGame(game)">{{game.player1.player.username}}</td>
+                    <td (click)="onSelectGame(game)" class="text-center">
+                      <h3>
+                        <span [ngStyle]="{'color':game.gamesWonPlayer1 >= game.gamesWonPlayer2 && game.gameResult !== 'NO_RESULT' ? 'green' : 'black' }">{{game.gamesWonPlayer1}}</span>
+                        VS
+                        <span [ngStyle]="{'color':game.gamesWonPlayer2 >= game.gamesWonPlayer1 && game.gameResult !== 'NO_RESULT' ? 'green' : 'black' }">{{game.gamesWonPlayer2}}</span>
+                      </h3></td>
+                    <td (click)="onSelectGame(game)" class="text-end">{{game.player2.player.username}}</td>
+                    <td (click)="onSelectGame(game)" class="text-end"><img height="40" width="40" src="{{game.player2.player.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/></td>
+
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-hover mb-0">
+                <tbody *ngFor="let participation of tournament.participations">
+                  <tr class="" *ngIf="participation.byeRound == matching.round">
+                    <td class="col-2"><img height="40" width="40" src="{{participation.player.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/></td>
+                    <td class="col-10"> Player <b>{{participation.player.username}}</b> bye this round</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- <ul class="list-group list-group-flush">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+        </ul>
+        <div class="card-footer">
+          Card footer
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<button [hidden]="true" type="button" id="openGameResults" data-bs-toggle="modal" data-bs-target="#addGameResult">
+</button>
+
+<div class="modal draggable fade bd-example-modal-lg" id="addGameResult" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center">Game results</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <form #gameForm="ngForm" (ngSubmit)="onGameResultSubmit(gameForm)">
+                <div class="form-group">
+                  <label for="gamesWonPlayer1">{{currentGame?.player1.player.username}}'s score:</label>
+                  <select name="gamesWonPlayer1" [(ngModel)]="currentGame.gamesWonPlayer1" required ngModel class="form-select" >
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="gamesWonPlayer2">{{currentGame?.player2.player.username}}'s score:</label>
+                  <select name="gamesWonPlayer2" [(ngModel)]="currentGame.gamesWonPlayer2" required ngModel class="form-select">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+                <button type="submit"  style="display: none;" id="game-save"></button>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="game-close">Close</button>
+            <button type="button" (click)="saveGame()" [disabled]="gameForm.invalid" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
