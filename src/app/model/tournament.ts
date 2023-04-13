@@ -9,7 +9,7 @@ export class Tournament{
 	currentRound: number;
 	creationDate?: any;
 	finishDate?: any;
-	owner: User;
+	owner: User = new User;
 	participations: PlayerParticipation[];
 	allGames: Game[];
 	roundMatchings: RoundMatching[];
