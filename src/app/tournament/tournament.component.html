@@ -9,14 +9,14 @@
         </div>
         <div class="card-body">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item" *ngIf="tournament?.creationDate"><b>Created:  </b>{{tournament?.creationDate}}</li>
-          <li class="list-group-item" *ngIf="tournament?.finishDate"><b>Finished:  </b>{{tournament?.finishDate}}</li>
+          <li class="list-group-item" *ngIf="tournament?.creationDate"><b>Created:  </b>{{tournament?.creationDate | date: 'mediumDate'}}</li>
+          <li class="list-group-item" *ngIf="tournament?.finishDate"><b>Finished:  </b>{{tournament?.finishDate | date: 'mediumDate'}}</li>
           <li class="list-group-item"><b>Rounds:  </b>{{tournament?.rounds}}</li>
           <li class="list-group-item"><b>Current round:  </b>{{tournament?.currentRound}}</li>
 
         </ul>
       </div>
-        <div class="card-footer">
+        <div class="card-footer" [hidden]="tournament.finished">
           <p class="card-text">Share this code with your players:</p>
             <h2>{{tournament?.tournamentString}}</h2>
         </div>
@@ -27,12 +27,26 @@
         </div>
         <div class="card-body">
             <table class="table table-hover">
+              <thead class="table-borderless">
+                <tr class="text-center">
+                  <th>Photo</th>
+                  <th>Username</th>
+                  <th>Score</th>
+                  <th>OMW%</th>
+                  <th>GW%</th>
+                  <th>OGW%</th>
+                </tr>
+              </thead>
               <tbody *ngFor="let participation of tournament?.participations">
-                <tr class="">
+                <tr class="text-center">
                   <td (click)="onSelectParticipation(participation)">
                     <img height="40" width="40" src="{{participation?.player.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/>
                   </td>
                   <td (click)="onSelectParticipation(participation)">{{participation?.player.username}}</td>
+                  <td (click)="onSelectParticipation(participation)">{{participation?.score}}</td>
+                  <td (click)="onSelectParticipation(participation)">{{participation?.omw}}</td>
+                  <td (click)="onSelectParticipation(participation)">{{participation?.gw}}</td>
+                  <td (click)="onSelectParticipation(participation)">{{participation?.ogw}}</td>
                 </tr>
               </tbody>
             </table>

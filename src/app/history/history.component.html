@@ -1,0 +1,69 @@
+<div class=" shadow-sm position-relative overflow-hidden p-3 mt-3 bg-light">
+  <div class="row">
+    <div class="col-lg">
+      <div class="shadow card mb-3" *ngIf="tournaments"> <!-------------------------------stats card-->
+        <div class="card-header">
+          <h5 class="card-title">Your statistics</h5>
+        </div>
+        <div class="card-body">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">You've played in <b>{{tournaments?.length}}</b> tournaments,
+          and won <b>{{averageParticipation?.finalPlacement}}</b> times</li>
+          <li class="list-group-item">You've won {{averageParticipation?.matchesWon}} matches
+            out of {{averageParticipation?.matchesLost + averageParticipation?.matchesWon + averageParticipation?.matchesTied}}
+          </li>
+          <li class="list-group-item">You've won {{averageParticipation?.gamesWon}} games
+            out of {{averageParticipation?.gamesLost + averageParticipation?.gamesWon}}</li>
+
+        </ul>
+      </div>
+      </div>
+
+      <div class="shadow card mb-3"> <!-------------------------------tournaments card-->
+        <div class="card-header">
+          <h5 class="card-title">Your tournament history</h5>
+        </div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead class="table-borderless">
+              <tr class="">
+                <th>Tournament code</th>
+                <th>Owner</th>
+                <th>Finish date</th>
+                <th>Total players</th>
+                <th>Your placement</th>
+                <th>View details</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let tournament of tournaments">
+              <tr class="">
+                <td (click)="onSelectTournament(tournament)">{{tournament?.tournamentString}}</td>
+                <td (click)="onSelectTournament(tournament)">
+                  <img height="40" width="40" src="{{tournament?.owner.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/>
+                  {{tournament?.owner.username}}
+                </td>
+                <td (click)="onSelectTournament(tournament)">
+                  <span *ngIf="tournament.finishDate">{{tournament?.finishDate | date: 'medium'}}</span>
+                  <span *ngIf="!tournament.finishDate">Ongoing</span>
+
+                </td>
+                <td (click)="onSelectTournament(tournament)">{{tournament?.participations.length}}</td>
+                <td (click)="onSelectTournament(tournament)">
+                  <span hidden>{{findParticipationInTournament(tournament)}}</span>
+                  <span *ngIf="currentParticipation.finalPlacement != 0">{{currentParticipation?.finalPlacement}}</span>
+                  <span *ngIf="currentParticipation.finalPlacement == 0">n/a</span>
+                </td>
+                <td (click)="onSelectTournament(tournament)">
+                  <div class="btn-group">
+                    <button class="btn btn-outline-info" (click)="onSelectTournament(tournament)"><i class="fas fa-edit"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

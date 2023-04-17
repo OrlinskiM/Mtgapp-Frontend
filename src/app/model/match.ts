@@ -20,13 +20,13 @@ export class Match{
     this.player1.byeRound = 0;
     this.player1.gamesWon = 0;
     this.player1.id = 0;
-    this.player1.roundsWon = 0;
+    this.player1.matchesWon = 0;
     this.player1.score = 0;
     this.player2.player = new User();
     this.player2.byeRound = 0;
     this.player2.gamesWon = 0;
     this.player2.id = 0;
-    this.player2.roundsWon = 0;
+    this.player2.matchesWon = 0;
     this.player2.score = 0;
   }
 }

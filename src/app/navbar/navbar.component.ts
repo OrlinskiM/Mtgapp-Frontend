@@ -30,6 +30,10 @@ export class NavbarComponent {
         (response: Tournament) => {
           console.log(response.tournamentString);
           this.tournamentService.deleteTournamentFromLocalCache(response);
+          this.router.routeReuseStrategy.shouldReuseRoute = function () {
+            return false;
+        }
+        this.router.onSameUrlNavigation = 'reload';
           this.router.navigateByUrl(`/tournament/${response.tournamentString}`);
         },
         (errorResponse: HttpErrorResponse) => {
@@ -38,6 +42,10 @@ export class NavbarComponent {
         }
       )
     );
+  }
+
+  tournamentHistory(){
+    this.router.navigateByUrl(`/user/tournaments`);
   }
 
   logout(){

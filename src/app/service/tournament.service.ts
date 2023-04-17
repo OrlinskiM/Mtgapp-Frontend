@@ -7,11 +7,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TournamentService {
+
   private host = 'http://localhost:8081';
   constructor(private http: HttpClient) { }
 
   public getTournament(tournamentString: string): Observable<Tournament>{
     return this.http.get<Tournament>(`${this.host}/tournament/${tournamentString}`);
+  }
+
+  public getTournaments(): Observable<Tournament[]>{
+    return this.http.get<Tournament[]>(`${this.host}/tournament/findAll`);
   }
 
   public addTournament(): Observable<Tournament>{

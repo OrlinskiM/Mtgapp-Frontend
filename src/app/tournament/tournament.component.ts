@@ -48,6 +48,7 @@ throw new Error('Method not implemented.');
           this.tournamentService.addTournamentToLocalCache(response);
           this.tournament = response;
           this.isUserOwner();
+          this.sortParticipations();
           if (showNotification) {
             this.notifier.sendNotification(NotificationType.SUCCESS, `${response.tournamentString} loaded successfully.`);
           }
@@ -60,6 +61,14 @@ throw new Error('Method not implemented.');
       )
     );
     }
+
+  sortParticipations() {
+    if(!this.tournament.finished){
+      this.tournament.participations.sort((a,b) => (a.score > b.score) ? -1 : 1);
+    } else {
+      this.tournament.participations.sort((a,b) => (a.finalPlacement > b.finalPlacement) ? 1 : -1);
+    }
+  }
 
   isUserOwner() {
     this.currentUser = this.getLoggedInUserFromLocalCache();

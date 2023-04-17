@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { TournamentService } from './service/tournament.service';
 import { TournamentComponent } from './tournament/tournament.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     UserComponent,
     TournamentComponent,
     NavbarComponent,
+    HistoryComponent,
   ],
   imports: [
     BrowserModule,
