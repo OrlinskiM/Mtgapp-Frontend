@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     if(this.authenticationService.isLoggedIn()){
-      this.router.navigateByUrl('/user/management');
+      this.router.navigateByUrl('home');
     }
   }
   ngOnDestroy(): void {
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
       this.authenticationService.register(user).subscribe(
         (response: User) => {
           this.notifier.sendNotification(NotificationType.SUCCESS, `New account created: ${response.username}.`);
-          this.router.navigateByUrl('/')
+          this.router.navigateByUrl('/login')
         },
         (error: HttpErrorResponse) => {
           console.log(error);

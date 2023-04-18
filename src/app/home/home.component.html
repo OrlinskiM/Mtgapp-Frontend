@@ -1,0 +1,13 @@
+<div class=" shadow-sm p-4 p-md-5 mb-4 mt-3 rounded bg-body-tertiary">
+  <div class="col-md-8 px-0">
+    <h1 class="display-4 fst-italic">Host your own Magic The Gathering tournaments with ease</h1>
+    <p class="lead my-3">Start by creating your own tournament, or join an existing one:</p>
+  </div>
+</div>
+<div class=" shadow-sm p-4 p-md-5 mb-4 mt-3 rounded bg-body-tertiary">
+  <div class="input-group input-group-lg">
+    <span class="input-group-text" id="inputGroup-sizing-lg">Enter code</span>
+    <input type="text" class="form-control" #tournamentString aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+    <button class="btn btn-outline-success" type="button" id="button-addon2" (click)="join(tournamentString.value)">Join tournament</button>
+  </div>
+</div>

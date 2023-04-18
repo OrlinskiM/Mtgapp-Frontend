@@ -6,10 +6,12 @@ import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { TournamentComponent } from './tournament/tournament.component';
 import { HistoryComponent } from './history/history.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard]},
   {path: 'user/management', component: UserComponent, canActivate: [AuthenticationGuard]},
   {path: 'user/tournaments', component: HistoryComponent, canActivate: [AuthenticationGuard]},
   {path: 'tournament/:tournamentString', component: TournamentComponent, canActivate: [AuthenticationGuard]},

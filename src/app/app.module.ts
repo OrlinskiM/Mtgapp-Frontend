@@ -18,6 +18,7 @@ import { TournamentService } from './service/tournament.service';
 import { TournamentComponent } from './tournament/tournament.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HistoryComponent } from './history/history.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { HistoryComponent } from './history/history.component';
     TournamentComponent,
     NavbarComponent,
     HistoryComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

@@ -148,7 +148,13 @@ throw new Error('Method not implemented.');
         this.tournamentService.pairTournamentRound(this.tournamentString).subscribe(
           (response: Tournament) => {
             this.getTournament(false);
-            this.notifier.sendNotification(NotificationType.SUCCESS, `Round ${this.tournament.currentRound + 1} paired succesfully`);
+            if(!this.tournament.finished){
+              this.notifier.sendNotification(NotificationType.SUCCESS, `Round ${this.tournament.currentRound + 1} paired succesfully`);
+
+            } else {
+              this.notifier.sendNotification(NotificationType.SUCCESS, `Tournament finished`);
+            }
+
           },
           (errorResponse: HttpErrorResponse) => {
             console.log(errorResponse);

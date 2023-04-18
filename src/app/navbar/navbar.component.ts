@@ -24,6 +24,10 @@ export class NavbarComponent {
 
   }
 
+  home() {
+    this.router.navigateByUrl(`home`);
+    }
+
   addNewTournament(){
     this.subscriptions.push(
       this.tournamentService.addTournament().subscribe(
@@ -50,5 +54,6 @@ export class NavbarComponent {
 
   logout(){
     this.authenticationService.logout();
+    this.router.navigateByUrl(`/login`);
   }
 }
