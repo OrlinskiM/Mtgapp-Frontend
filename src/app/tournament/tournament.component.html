@@ -16,7 +16,7 @@
 
         </ul>
       </div>
-        <div class="card-footer" [hidden]="tournament.finished">
+        <div class="card-footer" [hidden]="tournament?.finished">
           <p class="card-text">Share this code with your players:</p>
             <h2>{{tournament?.tournamentString}}</h2>
         </div>
@@ -51,7 +51,7 @@
               </tbody>
             </table>
         </div>
-        <div class="card-footer" [hidden]="!isOwner">
+        <div class="card-footer" [hidden]="!isOwner || tournament?.finished">
           <form #GuestForm="ngForm" (ngSubmit)="onGuestSubmit(GuestForm)">
             <div class="form-group">
               <div class="input-group">
@@ -68,7 +68,7 @@
         <div class="card-header">
           Rounds
         </div>
-        <div class="card-body" [hidden]="!isOwner || tournament.currentRound > 0">
+        <div class="card-body" [hidden]="!isOwner || tournament.currentRound > 0 || tournament?.finished">
           <p class="card-text">Start your tournament</p>
           <form #startForm="ngForm" (ngSubmit)="onTournamentStart(startForm)">
             <div class="form-group">
@@ -79,9 +79,9 @@
             </div>
           </form>
         </div>
-        <div class="card-body" [hidden]="!isOwner || tournament.currentRound == 0">
+        <div class="card-body" [hidden]="!isOwner || tournament.currentRound == 0 || tournament?.finished">
           <p class="card-text">Pair next round</p>
-          <button type="button" (click)="onNextRound()" class="btn btn-primary">Start</button>
+          <button type="button" (click)="onNextRound()" class="btn btn-primary">Pair next round</button>
         </div>
         <div class="accordion" id="accordionExample">     <!-------------------------------round accordion-->
           <div class="accordion-item" *ngFor="let matching of tournament?.roundMatchings">

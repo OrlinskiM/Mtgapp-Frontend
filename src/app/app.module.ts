@@ -19,6 +19,7 @@ import { TournamentComponent } from './tournament/tournament.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HistoryComponent } from './history/history.component';
 import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { HomeComponent } from './home/home.component';
     NavbarComponent,
     HistoryComponent,
     HomeComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,10 @@ export class UserService {
     return this.http.get<User[]>(`${this.host}/user/list`);
   }
 
+  public getUser(username: string): Observable<User>{
+    return this.http.get<User>(`${this.host}/user/${username}`);
+  }
+
   public addUser(formData: FormData): Observable<User>{
     return this.http.post<User>(`${this.host}/user/add`, formData);
   }
@@ -51,6 +55,13 @@ export class UserService {
     return null;
   }
 
+  public getLoggedInUserFromLocalCache(): User{
+    if(localStorage.getItem('user')){
+      return JSON.parse(localStorage.getItem('user') || '{}');
+    }
+    return null;
+  }
+
   public createUserFormData(loggedInUsername: string, user: User, profileImage: File): FormData{
     const formData = new FormData();
     formData.append('currentUsername', loggedInUsername);
@@ -61,6 +72,16 @@ export class UserService {
     formData.append('role', user.role);
     formData.append('isActive', JSON.stringify(user.active));
     formData.append('isNonLocked', JSON.stringify(user.notLocked));
+    formData.append('profileImage', profileImage);
+    return formData;
+  }
+
+  public createUserFormDataSafe(loggedInUsername: string, user: User, profileImage: File): FormData{
+    const formData = new FormData();
+    formData.append('currentUsername', loggedInUsername);
+    formData.append('username', user.username);
+    formData.append('firstName', user.firstName);
+    formData.append('lastName', user.lastName);
     formData.append('profileImage', profileImage);
     return formData;
   }

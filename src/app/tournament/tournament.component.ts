@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NotificationService } from '../service/notification.service';
 import { TournamentService } from '../service/tournament.service';
@@ -17,9 +17,6 @@ import { User } from '../model/user';
   styleUrls: ['./tournament.component.css']
 })
 export class TournamentComponent {
-onSelectParticipation(_t32: PlayerParticipation) {
-throw new Error('Method not implemented.');
-}
 
   private subscriptions: Subscription[] = [];
   tournamentString: string;
@@ -30,7 +27,8 @@ throw new Error('Method not implemented.');
 
   constructor(private route: ActivatedRoute,
               private notifier: NotificationService,
-              private tournamentService: TournamentService) {}
+              private tournamentService: TournamentService,
+              private router: Router) {}
 
   ngOnInit() {
     this.subscriptions.push(
@@ -38,7 +36,7 @@ throw new Error('Method not implemented.');
         this.tournamentString = params['tournamentString'];
       })
     );
-    this.getTournament(true);
+    this.getTournament(false);
   }
 
   getTournament(showNotification: boolean) {
@@ -49,6 +47,7 @@ throw new Error('Method not implemented.');
           this.tournament = response;
           this.isUserOwner();
           this.sortParticipations();
+          console.log(this.tournament.finished);
           if (showNotification) {
             this.notifier.sendNotification(NotificationType.SUCCESS, `${response.tournamentString} loaded successfully.`);
           }
@@ -125,6 +124,13 @@ throw new Error('Method not implemented.');
       }
     }
 
+    onSelectParticipation(participation: PlayerParticipation) {
+        if(participation.player.joinDate != null){
+          this.router.navigateByUrl(`user/${participation.player.username}`);
+        }
+
+      }
+
     onTournamentStart(startForm: NgForm){
       const formData = new FormData();
       formData.append('rounds', startForm.form.get('rounds').value)
@@ -148,7 +154,8 @@ throw new Error('Method not implemented.');
         this.tournamentService.pairTournamentRound(this.tournamentString).subscribe(
           (response: Tournament) => {
             this.getTournament(false);
-            if(!this.tournament.finished){
+            console.log(this.tournament.finished);
+            if(this.tournament.rounds != this.tournament.currentRound){
               this.notifier.sendNotification(NotificationType.SUCCESS, `Round ${this.tournament.currentRound + 1} paired succesfully`);
 
             } else {

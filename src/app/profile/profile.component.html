@@ -1,0 +1,98 @@
+<div class="col-lg"><!-------------------------------profile-->
+  <div class="shadow card mb-3 mt-3"> <!-------------------------------info card-->
+    <div class="card-header">
+      <h5 class="card-title">{{user?.username}}'s profile</h5>
+    </div>
+    <!-- <div class="card-body">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngIf="user?.username"><b>Username:  </b>{{user?.username}}</li>
+      <li class="list-group-item" *ngIf="user?.firstName"><b>First name:  </b>{{user?.firstName}}</li>
+      <li class="list-group-item" *ngIf="user?.lastName"><b>Last name:  </b>{{user?.lastName}}</li>
+      <li class="list-group-item" *ngIf="user?.lastLoginDate"><b>Last login date:  </b>{{user?.lastLoginDate | date: 'mediumDate'}}</li>
+      <li class="list-group-item" *ngIf="user?.joinDate"><b>Join date:  </b>{{user?.joinDate | date: 'mediumDate'}}</li>
+
+    </ul>
+  </div> -->
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-sm-auto">
+          <div class="mx-auto" style="width: 120px;">
+            <div class="d-flex justify-content-center align-items-center rounded">
+              <img class="rounded" height="120" width="120" src="{{user?.profileImageUrl}}" alt="{{user?.firstName}}">
+            </div>
+          </div>
+        </div>
+        <div class="col d-flex flex-column flex-sm-row justify-content-between">
+          <div class=" text-sm-left mb-sm-0">
+            <h6 class="pt-sm-2 pb-1 mb-0 text-nowrap">Full name:
+              {{user?.firstName}}
+              {{user?.lastName}}</h6>
+            <p class="mb-1">nickname: {{user?.username}}</p>
+            <div class="">Status:
+              <span [hidden]="!user?.active" class="badge text-bg-success">Active</span>
+              <span [hidden]="user?.active" class="badge text-bg-danger">Inactive</span>
+            </div>
+            <div *ngIf="user?.lastLoginDate" class="text-muted"><small>Last Login: {{user?.lastLoginDate | date: 'medium'}}</small>
+            </div>
+          </div>
+          <div class="text-center text-sm-right">
+            <div class="text-muted"><small>Joined {{user?.joinDate | date: 'mediumDate'}}</small></div>
+            <button type="button" class="btn btn-primary mt-3" (click)="onEditUser(user)" *ngIf="currentUser?.userId == user?.userId">Edit profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button [hidden]="true" type="button" id="openUserEdit" data-bs-toggle="modal" data-bs-target="#editUserModal">
+</button>
+
+
+    <!-- edit user modal -->
+<div class="modal draggable fade bd-example-modal-lg" id="editUserModal" tabindex="-1"
+  role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">Edit {{editUser?.firstName}}
+          {{editUser?.lastName}}</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="">
+          <form #editUserForm="ngForm">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" name="firstName" required
+                [(ngModel)]="editUser.firstName" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" name="lastName" required
+                [(ngModel)]="editUser.lastName" class="form-control">
+            </div>
+            <div class="form-group mb-2">
+              <div class="form-group">
+                <div class="custom-file">
+                  <label for="formFile" class="form-label">Profile picture</label>
+                  <input type="file" accept="image/*" name="profileImage" (change)="onProfileImageChange($event)" class="form-control" id="formFile">
+                  <label class="custom-file-label"><span [hidden]="!fileName">{{ fileName }}</span>
+                    <span [hidden]="fileName">Choose File</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeEditUserModalButton">Close</button>
+        <button type="button" (click)="onUpdateUser()" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

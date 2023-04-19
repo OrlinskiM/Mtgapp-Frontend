@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../service/notification.service';
 import { NotificationType } from '../enum/notification-type.enum';
 import { TournamentService } from '../service/tournament.service';
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-navbar',
@@ -16,6 +17,7 @@ import { TournamentService } from '../service/tournament.service';
 export class NavbarComponent {
 
   private subscriptions: Subscription[] = [];
+  currentUser: User;
 
   constructor(private authenticationService: AuthenticationService,
                       private notifier: NotificationService,
@@ -50,6 +52,11 @@ export class NavbarComponent {
 
   tournamentHistory(){
     this.router.navigateByUrl(`/user/tournaments`);
+  }
+
+  profile(){
+    this.currentUser = this.authenticationService.getUserFromLocalCache();
+    this.router.navigateByUrl(`/user/${this.currentUser.username}`);
   }
 
   logout(){
