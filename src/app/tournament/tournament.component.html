@@ -38,7 +38,7 @@
                 </tr>
               </thead>
               <tbody *ngFor="let participation of tournament?.participations">
-                <tr class="text-center">
+              <tr class="text-center" [ngClass]="setWinnerColors(participation.finalPlacement)">
                   <td (click)="onSelectParticipation(participation)">
                     <img height="40" width="40" src="{{participation?.player.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="pfp"/>
                   </td>

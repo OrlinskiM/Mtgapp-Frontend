@@ -7,20 +7,23 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" href="" (click)="$event.preventDefault();home()">Home</a>
+          <a class="nav-link active" href="/" (click)="$event.preventDefault();home()">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="" (click)="$event.preventDefault();addNewTournament()">New Tournament</a>
+          <a class="nav-link" href="/tournament" (click)="$event.preventDefault();addNewTournament()">New Tournament</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="" (click)="$event.preventDefault();tournamentHistory()">History</a>
+          <a class="nav-link" href="/user/tournemants" (click)="$event.preventDefault();tournamentHistory()">History</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="" (click)="$event.preventDefault();profile()">Your profile</a>
+          <a class="nav-link" href="/user/profile" (click)="$event.preventDefault();profile()">Your profile</a>
         </li>
 
       </ul>
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="" *ngIf="!currentUser" (click)="$event.preventDefault();profile()">Welcome {{currentUser.username}}</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link text-danger" href="#" (click)="logout()">Logout</a>
         </li>

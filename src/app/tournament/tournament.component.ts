@@ -175,6 +175,12 @@ export class TournamentComponent {
       document.getElementById('match-save').click();
     }
 
+    setWinnerColors(place: number){
+      if(place == 1) return 'first';
+      if(place == 2) return 'second';
+      if(place == 3) return 'third';
+    }
+
     private getLoggedInUserFromLocalCache(): User{
       if(localStorage.getItem('user')){
         return JSON.parse(localStorage.getItem('user') || '{}');

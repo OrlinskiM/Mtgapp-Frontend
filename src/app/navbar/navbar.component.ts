@@ -26,6 +26,10 @@ export class NavbarComponent {
 
   }
 
+  ngOnInit(){
+    this.currentUser = this.authenticationService.getUserFromLocalCache();
+  }
+
   home() {
     this.router.navigateByUrl(`home`);
     }
@@ -55,7 +59,6 @@ export class NavbarComponent {
   }
 
   profile(){
-    this.currentUser = this.authenticationService.getUserFromLocalCache();
     this.router.navigateByUrl(`/user/${this.currentUser.username}`);
   }
 
