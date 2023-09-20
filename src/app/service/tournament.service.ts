@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Tournament } from '../model/tournament';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TournamentService {
 
-  private host = 'http://localhost:8081';
+  private host = environment.apiUrl;
+
   constructor(private http: HttpClient) { }
 
   public getTournament(tournamentString: string): Observable<Tournament>{

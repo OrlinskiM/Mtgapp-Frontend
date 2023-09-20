@@ -10,7 +10,7 @@ import { CustomHttpResponse } from '../model/custom-http-response';
   providedIn: 'root'
 })
 export class UserService {
-  private host = 'http://localhost:8081';
+  private host = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
